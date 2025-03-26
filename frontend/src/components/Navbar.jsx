@@ -1,15 +1,29 @@
-import { Link } from "react-router-dom";
+import { href, Link } from "react-router-dom";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { LuCircleUserRound } from "react-icons/lu";
 import { CgHeart } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
+import avatarImg from "../assets/avatar.png"; 
+
+import { useState } from "react";
 
 
+
+// initialize dropdown content
+const navigation = [
+    {name : "Dashboard", href : "/dashboard" },               
+    {name : "Orders", href : "/orders" },
+    {name : "Cart Page", href : "/cart" },
+    {name : "Check Out", href : "/checkout" },
+]
 
 
 
 const Navbar = () => {
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const currentUser = true;
   return (
   <>
             <header className='max-w-screen-2x1 mx-auto px-4 py-6'>
@@ -38,7 +52,42 @@ const Navbar = () => {
 
                         {/* right side dive */}
                         <div className="relative flex items-center md:space-x-3 space-x-2">
-                            <LuCircleUserRound className="size-6"/>
+                            <div>
+                                {
+                                    currentUser ? 
+                                    <>
+                                    
+                                    <button onClick={()=>setIsDropdownOpen(!isDropdownOpen)}>
+                                        <img src={avatarImg} alt="" className={`size-7 rounded-full ${currentUser ? 'ring-4 ring-blue-200' :''}`} />
+                                    </button>
+
+                                    {/* show drop down list when click */}
+                                     {
+                                          isDropdownOpen && (
+                                                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-40">
+                                                    <ul className="py-2">
+                                                        {
+                                                            navigation.map((item)=>(
+                                                                <li key={item.name}>
+                                                                    <Link to ={item.href} className="block px-4 py-2 hover:bg-gray-100 text-sm">
+                                                                        {item.name}
+                                                                    </Link>
+                                                                </li>
+                                                            ))
+                                                        }
+                                                    </ul>
+                                                </div>
+
+                                          )
+                                          
+                                          
+                                          }
+                                    
+                                    </> : <Link to="/login"><LuCircleUserRound className="size-6"/></Link>
+                                }
+                            </div>
+
+                            
                             <button className="hidden sm:block ">
                                     <CgHeart className="size-6"/>
                             </button>
