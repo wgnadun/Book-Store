@@ -3,14 +3,16 @@
 
 @theme {
 
-    --font-prime: "Montserrat", "sans-serif";
-    --font-seco: "Nunito Sans", "sans-serif";
-    
-    --color--primary: #FFCE1A;
-    --color--secondary: #0D0842;
-    --color--blackBG: #F3F3F3;
-    --color--Favorite: #FF5841;
+    --color-primary: #FFCE1A;
+    --color-secondary: #0D0842;
+    --color-blackBG: #F3F3F3;
+    --color-Favorite: #FF5841;
   
   }
+  
+  #root {
+    --font-primary: "Montserrat", "sans-serif";
+    --font-secondary: "Nunito Sans", "sans-serif";
+  }
 
-
+  
