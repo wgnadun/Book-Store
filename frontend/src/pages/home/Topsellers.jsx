@@ -34,7 +34,7 @@ const Topsellers = () => {
             
   return (
     <div className='py-10'>
-       <h1 className='text-3xl font-semibold mb-6'>Top Selller</h1>
+       <h2 className='text-3xl font-semibold mb-6'>Top Selller</h2>
   
   {/* Filter Systeme for Category */}
         <div className='mb-8 flex items-center'>
