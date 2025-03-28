@@ -5,11 +5,13 @@ import BookCard from '../books/BookCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // import required modules
-import { Pagination } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
 
 
 
@@ -51,7 +53,7 @@ const Topsellers = () => {
         <Swiper
         slidesPerView={1}
         spaceBetween={30}
-        
+        navigation={true}
         breakpoints={{
           640: {
             slidesPerView: 1,
@@ -70,7 +72,7 @@ const Topsellers = () => {
             spaceBetween: 50,
           }
         }}
-        modules={[Pagination]}
+        modules={[Pagination,Navigation]}
         className="mySwiper"
       
 >
