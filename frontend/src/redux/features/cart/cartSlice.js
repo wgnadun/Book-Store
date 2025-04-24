@@ -1,20 +1,21 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const intialState = {
+const initialState = {
     cartItems :[]
 
 }
 
 const cartSlice = createSlice({
     name:'cart',
-    intialState,
+    initialState:initialState,
     reducers:{
         addToCart:(state,action)=>{
             const existingItem = state.cartItems.find(item =>item._id === action.payload._id)
             if(!existingItem){
                 state.cartItems.push(action.payload);
+                alert("Item added succesfully !")
             } else {
-                alert("Item already exists");
+                alert("Item already exists !");
             }
         }
     }
