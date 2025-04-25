@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
 import  Swal  from 'sweetalert2';
-import { store } from '../../store';
 
 const initialState = {
     cartItems :[]
