@@ -1,12 +1,24 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { getImgUrl } from '../../Utils/getImgUrl';
-
+import {clearCart, removeFromCart} from '../../redux/features/cart/cartSlice'
 const CartPage = () => {
 
     const cartItems = useSelector(state =>state.cart.cartItems);
+    const dispatch = useDispatch();
+
     const totalPrice = cartItems.reduce((acc,item)=>acc + item.newPrice,0).toFixed(2);
+    
+    
+    const handleRemoveFromCart = (product) => {
+            dispatch(removeFromCart(product))
+    }
+
+    const handleClearCart =(product)=>{
+            dispatch(clearCart(product))
+    }
+
 
   return (
     <>
@@ -17,6 +29,7 @@ const CartPage = () => {
                     <div className="ml-3 flex h-7 items-center ">
                     <button
                         type="button"
+                        onClick={handleClearCart}
                         className="relative -m-2 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-secondary transition-all duration-200  "
                     >
                         <span className="">Clear Cart</span>
@@ -55,8 +68,13 @@ const CartPage = () => {
                                     <p className="text-gray-500"><strong>Qty:</strong> 1</p>
     
                                     <div className="flex">
-                                        <button  type="button" className="font-medium text-red-600 hover:text-red-500">
-                                        Remove
+                                        <button 
+                                        onClick={()=>
+                                            handleRemoveFromCart(product)
+                                        }
+                                        type="button" 
+                                        className="font-medium text-red-600 hover:text-red-500">
+                                        remove
                                         </button>
                                     </div>
                                     </div>
