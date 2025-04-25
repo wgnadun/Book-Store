@@ -3,10 +3,12 @@ import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { LuCircleUserRound } from "react-icons/lu";
 import { CgHeart } from "react-icons/cg";
+
 import { FiShoppingCart } from "react-icons/fi";
 import avatarImg from "../assets/avatar.png"; 
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 
 
@@ -23,6 +25,10 @@ const navigation = [
 const Navbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const cartItems = useSelector (state =>state.cart.cartItems);
+
+    console.log(cartItems);
+
     const currentUser = true;
   return (
   <>
@@ -94,7 +100,10 @@ const Navbar = () => {
                                                                          {/* when user click on the cart icon its need to route to another page that why use a Link*/}
                            <Link to="/cart" className="bg-amber-500 p-1 sm:px-5 py-1.5 flex items-center rounded-md">
                                 <FiShoppingCart className="size-6"/>
-                                <span className="text-sm font-semibold sm:ml-1">0</span>  
+                                {
+                                    cartItems.length > 0 ?  <span className="text-sm font-semibold sm:ml-1">{cartItems.length}</span> :<span className="text-sm font-semibold sm:ml-1">0</span>
+                                }
+                                  
                             </Link> 
 
                         </div>
