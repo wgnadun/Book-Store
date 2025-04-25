@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import  Swal  from 'sweetalert2';
+import { store } from '../../store';
 
 const initialState = {
     cartItems :[]
@@ -31,12 +32,19 @@ const cartSlice = createSlice({
                         iconColor:"#d33"
                       });
             }
+        },
+        removeFromCart:(state,action) =>{
+            store.cartItems = state.cartItems.filter(item =>item._id !== action.payload._id)
+        },
+        clearCart :(state)=>{
+            state.cartItems = []
         }
+
     }
     
 })
 
 ///export actions
 
-export const {addToCart} = cartSlice.actions;
+export const {addToCart,removeFromCart,clearCart} = cartSlice.actions;
 export default cartSlice.reducer;
