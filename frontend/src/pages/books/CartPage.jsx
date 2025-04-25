@@ -1,6 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 const CartPage = () => {
+
+    const cartItems = useSelector(state =>state.cart.cartItems);
+
+
   return (
     <>
                 <div className="flex mt-12 h-full flex-col overflow-hidden bg-white shadow-xl">
@@ -10,8 +16,7 @@ const CartPage = () => {
                     <div className="ml-3 flex h-7 items-center ">
                     <button
                         type="button"
-                        onClick={handleClearCart}
-                        className="relative -m-2 py-1 px-2 bg-red-500 text-white rounded-md hover:bg-secondary transition-all duration-200  "
+                        className="relative -m-2 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-secondary transition-all duration-200  "
                     >
                         <span className="">Clear Cart</span>
                     </button>
@@ -20,8 +25,9 @@ const CartPage = () => {
 
                 <div className="mt-8">
                     <div className="flow-root">
-                    
-                        <ul role="list" className="-my-6 divide-y divide-gray-200">
+                    {
+                        cartItems.length > 0 ? (
+                            <ul role="list" className="-my-6 divide-y divide-gray-200">
                             <li  className="flex py-6">
                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 <img
@@ -45,7 +51,7 @@ const CartPage = () => {
                                 <p className="text-gray-500"><strong>Qty:</strong> 1</p>
 
                                 <div className="flex">
-                                    <button  type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                    <button  type="button" className="font-medium text-red-600 hover:text-red-500">
                                     Remove
                                     </button>
                                 </div>
@@ -54,6 +60,12 @@ const CartPage = () => {
                             </li>
                     
                         </ul>
+                        ) : (
+                            <div className="text-3xl flex justify-center items-center h-full w-full">
+                                 <p className="p-6 font-medium text-gray-400 ml-1">Oops Cart is Empty !</p>       
+                            </div>)
+                    }
+
                     </div>
                 </div>
                 </div>
@@ -67,7 +79,7 @@ const CartPage = () => {
                 <div className="mt-6">
                     <Link
                     to="/checkout"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                    className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
                     >
                     Checkout
                     </Link>
@@ -78,7 +90,7 @@ const CartPage = () => {
                     <button
                         type="button"
 
-                        className="font-medium text-indigo-600 hover:text-indigo-500 ml-1"
+                        className="font-medium text-blue-600 hover:text-blue-500 ml-1"
                     >
                         Continue Shopping
                         <span aria-hidden="true"> &rarr;</span>
