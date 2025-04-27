@@ -14,7 +14,7 @@ const CheckoutPage = () => {
           formState: { errors } ,
         } = useForm()
      
-        const [isChecked,setIsChecked] = useState(true)
+        const [isChecked,setIsChecked] = useState(false)
         const onSubmit = (data)=> {
         const newOrder ={
             name:data.name,
