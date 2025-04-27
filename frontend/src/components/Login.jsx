@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 
 const Login = () => {
   const [message, setMessage] = useState("");
-  const { register,
+  const {
+          register,
           handleSubmit, 
           watch, 
-          formState: { errors } 
+          formState: { errors } ,
         } = useForm();
+
         const onSubmit = data => console.log(data);
 
         const handleGoogleSignIn =()=>{
