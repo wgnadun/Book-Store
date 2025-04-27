@@ -3,19 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "start": "node index.js" ,
-  "start:dev": "nodemon index.js" 
-
-},
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
   "keywords": [],
   "author": "nadun",
   "license": "ISC",
   "type": "commonjs",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.14.0"
   },
   "devDependencies": {
-    "@ljharb/tsconfig": "^0.3.2"
+    "@ljharb/tsconfig": "^0.3.2",
+    "@types/node": "^22.15.2"
   }
 }
