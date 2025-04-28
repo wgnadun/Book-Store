@@ -58,9 +58,29 @@ const postABook =async(req,res)=>{
         res.status(500).send({message:"failed to fetch a book"})
     }
  }
+ 
+//  delete a book controller finc
+ 
+ const deleteBook = async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const deletedBook = await Book.findByIdAndDelete(id);
+        if(!deletedBook){
+            res.status(404).send({message:" oops ! Book is not found !"})
+        }
+        res.status(200).send({
+            message:"Book deleted successfully",
+            book:deletedBook
+        })
+    }catch(err){
+        console.error("Error in deleting books",err)
+        res.status(500).send({message:"failed to delete book"})
+    }
+ }
 module.exports={
     postABook,
     getAllBooks,
     getSingleBook,
-    updateBook
+    updateBook,
+    deleteBook
 }
