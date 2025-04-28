@@ -1,20 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const book = require('./book.model');
+const { postABook,getAllBooks } = require('./book.controller');
 
+// post a book
+router.post("/create-book",postABook)
 
-router.post("/create-book",async(req,res)=>{
-    try{
-        const newbook = await book({...req.body})
-        await newbook.save()
-        res.status(200).send({message:"Book created successfully",book: newbook})
-    }    catch(err){
-        console.error("Error in creating book",err)
-        res.status(500).send({message:"failed to create book"})
-    }
-
-})
-
-
+// get all books
+router.get("/",getAllBooks)
 
 module.exports = router;
