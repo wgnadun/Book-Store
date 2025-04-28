@@ -18,7 +18,7 @@ const postABook =async(req,res)=>{
  
  const getAllBooks = async(req,res)=>{
     try{
-        const books = await Book.find()
+        const books = await Book.find().sort({createdAt:-1})
         res.status(200).send({books})
     }catch(err){
         console.error("Error in fetching books",err)
