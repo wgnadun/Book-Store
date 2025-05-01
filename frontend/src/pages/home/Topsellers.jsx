@@ -11,8 +11,8 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useFetchAllBooksQuery } from '../../redux/features/cart/books.Api';
 
-import { useFetchAllBooksQuery } from '../../features/books/bookApiSlice';
 
 
 
@@ -20,14 +20,9 @@ const categories =["Choose a genre","Bussiness","Fiction","Horror","Adventure"];
 
 const Topsellers = () => {
     const [selectedCategory,setSelectedCategory] = useState("Choose a genre");
-
     const {data :books =[] } = useFetchAllBooksQuery();
-    console.log(books) 
-
-    
     const filteredBooks = selectedCategory === "Choose a genre" ? books :books.filter(book =>book.category === selectedCategory.toLowerCase());
 
-    console.log(filteredBooks);
             
   return (
     <div className='py-10'>
