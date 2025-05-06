@@ -8,8 +8,8 @@ const postABook =async(req,res)=>{
         const newbook = await Book({...req.body})
         await newbook.save()
         res.status(200).send({message:"Book created successfully",book: newbook})
-    }    catch(err){
-        console.error("Error in creating book",err)
+    }    catch(error){
+        console.error("Error in creating book",error)
         res.status(500).send({message:"failed to create book"})
     }
 
@@ -20,8 +20,8 @@ const postABook =async(req,res)=>{
     try{
         const books = await Book.find().sort({createdAt:-1})
         res.status(200).send({books})
-    }catch(err){
-        console.error("Error in fetching books",err)
+    }catch(error){
+        console.error("Error in fetching books",error)
         res.status(500).send({message:"failed to fetch books"})
     }
  }
@@ -35,8 +35,8 @@ const postABook =async(req,res)=>{
             res.status(404).send({message:" oops ! Book is not found !"})
         }
         res.status(200).send({book})
-    }catch(err){
-        console.error("Error in fetching books",err)
+    }catch(error){
+        console.error("Error in fetching books",error)
         res.status(500).send({message:"failed to fetch a book"})
     }
  }
@@ -45,13 +45,13 @@ const postABook =async(req,res)=>{
  const updateBook = async(req,res)=>{
     try{
         const {id} = req.params;
-        const updatebook = await Book.findByIdAndUpdate(id,req.body, {new:true});
-        if(!updatebook){
+        const updatedbook = await Book.findByIdAndUpdate(id,req.body, {new:true});
+        if(!updatedbook){
             res.status(404).send({message:" oops ! Book is not found !"})
         }
         res.status(200).send({
             message:"Book updated successfully",
-            book:updatebook
+            book:updatedbook
         })
     }catch(err){
         console.error("Error in fetching books",err)
@@ -72,8 +72,8 @@ const postABook =async(req,res)=>{
             message:"Book deleted successfully",
             book:deletedBook
         })
-    }catch(err){
-        console.error("Error in deleting books",err)
+    }catch(error){
+        console.error("Error in deleting books",error)
         res.status(500).send({message:"failed to delete book"})
     }
  }
