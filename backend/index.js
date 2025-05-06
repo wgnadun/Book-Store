@@ -21,11 +21,12 @@ app.use("/api/books",bookRoutes)
 async function main() {
   await mongoose.connect(process.env.DB_URL);
   app.use('/', (req, res) => {
-    res.send('Nad Nasfdsfsf!');
+    res.send('Welcome to the backend API!');
   });  
 }
 
-main().then(()=>console.log("Mongodb connect successfuly")).catch(err => console.log(err));
+main().then(()=>console.log("Mongodb connect successfuly"))
+.catch(err => console.error(err));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

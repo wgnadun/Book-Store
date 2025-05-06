@@ -45,13 +45,13 @@ const postABook =async(req,res)=>{
  const updateBook = async(req,res)=>{
     try{
         const {id} = req.params;
-        const updatedbook = await Book.findByIdAndUpdate(id,req.body, {new:true});
-        if(!updatedbook){
+        const updatebook = await Book.findByIdAndUpdate(id,req.body, {new:true});
+        if(!updatebook){
             res.status(404).send({message:" oops ! Book is not found !"})
         }
         res.status(200).send({
             message:"Book updated successfully",
-            book:updatedbook
+            book:updatebook
         })
     }catch(err){
         console.error("Error in fetching books",err)

@@ -11,7 +11,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import BookCard from '../books/BookCard';
-import { useFetchAllBooksQuery } from '../../redux/features/cart/books.Api';
+import { useFetchAllBooksQuery } from '../../redux/features/cart/booksApi';
 
 
 

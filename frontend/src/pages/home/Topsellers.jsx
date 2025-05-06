@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from 'react'
+import React, { useState} from 'react'
 import BookCard from '../books/BookCard';
 
 // Import Swiper React components
@@ -11,7 +11,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { useFetchAllBooksQuery } from '../../redux/features/cart/books.Api';
+import { useFetchAllBooksQuery } from '../../redux/features/cart/booksApi';
 
 
 
@@ -19,8 +19,9 @@ import { useFetchAllBooksQuery } from '../../redux/features/cart/books.Api';
 const categories =["Choose a genre","Bussiness","Fiction","Horror","Adventure"];
 
 const Topsellers = () => {
+  
     const [selectedCategory,setSelectedCategory] = useState("Choose a genre");
-    const {data :books =[] } = useFetchAllBooksQuery();
+    const {data :books = [] } = useFetchAllBooksQuery();
     const filteredBooks = selectedCategory === "Choose a genre" ? books :books.filter(book =>book.category === selectedCategory.toLowerCase());
 
             

@@ -1,5 +1,5 @@
-const getBaseUrl =()=>{
-    return "http://localhost:5000/"
+const getBaseUrl = () =>{
+    return "http://localhost:5000"
 }
 
-export default getBaseUrl
+export default getBaseUrl ;
