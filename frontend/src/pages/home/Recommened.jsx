@@ -17,7 +17,9 @@ import { useFetchAllBooksQuery } from '../../redux/features/cart/booksApi';
 
 const Recommened = () => {
   
-  const {data:books =[]} = useFetchAllBooksQuery();
+  const { data } = useFetchAllBooksQuery();
+ 
+     const books = Array.isArray(data) ? data : data?.books || [];
 
   return (
     <div className='py-16'>

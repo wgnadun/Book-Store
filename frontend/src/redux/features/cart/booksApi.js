@@ -22,9 +22,9 @@ const booksApi = createApi({
     endpoints : (builder) =>({
 
 
-        fetchAllBooks : builder.query({
+            fetchAllBooks : builder.query({
                 query :() => "/",
-                providesTags : ["Books"]
+                providesTags : ["Books"],
             }),
             fetchBookById: builder.query({
                 query:(id) =>`/${id}`,

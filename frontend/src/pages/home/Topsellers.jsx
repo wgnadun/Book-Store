@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useEffect,useState} from 'react'
 import BookCard from '../books/BookCard';
 
 // Import Swiper React components
@@ -21,9 +21,12 @@ const categories =["Choose a genre","Bussiness","Fiction","Horror","Adventure"];
 const Topsellers = () => {
   
     const [selectedCategory,setSelectedCategory] = useState("Choose a genre");
-    const {data :books = [] } = useFetchAllBooksQuery();
-    const filteredBooks = selectedCategory === "Choose a genre" ? books :books.filter(book =>book.category === selectedCategory.toLowerCase());
+    const { data } = useFetchAllBooksQuery();
 
+    const books = Array.isArray(data) ? data : data?.books || [];
+    
+    const filteredBooks = selectedCategory === "Choose a genre" ? books :books.filter((book) =>
+      book.category === selectedCategory.toLowerCase());
             
   return (
     <div className='py-10'>
