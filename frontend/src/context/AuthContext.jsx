@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { createContext, useState } from "react";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config"; //import firebase auth instance
 import { useContext } from "react"; //import useContext hook from react
 
@@ -36,14 +36,36 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
             return await signInWithPopup(auth,googleProvider)
    }
     
+   //logout the user
+    const logoutUser = () =>{
+     return signOut (auth)
+    }
 
+    // maanage user 
+
+
+    useEffect (()=>{
+        const unsubscribe = onAuthStateChanged(auth,(user)=>{
+            setCurrentUser(user);
+            setLoading(false);
+
+            if(user){
+                const {email,displayName,photoURL} = user ; 
+                const userData = {
+                    email,username:displayName,photo:photoURL
+                }
+            }
+        })
+        return () => unsubscribe() ;
+    },[])
 
     const value ={
              
         currentUser, //current user object
         registerUser,
         loginUser,
-        signInWithGoogle
+        signInWithGoogle,
+        logoutUser
         
         }
           
