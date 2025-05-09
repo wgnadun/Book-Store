@@ -3,8 +3,8 @@ import { getImgUrl } from '../../Utils/getImgUrl'
 import { FiShoppingCart } from 'react-icons/fi'
 import { useParams } from 'react-router-dom'
 import   { addToCart }  from '../../redux/features/cart/cartSlice'
-import { useFetchBookByIdQuery } from '../../redux/features/cart/booksApi'
 import { useDispatch } from 'react-redux'
+import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi'
 
 
 const SingleBook = () => {

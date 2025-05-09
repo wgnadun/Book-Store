@@ -1,8 +1,7 @@
-const { timeStamp } = require('console');
 const mongoose = require('mongoose');
-const { type } = require('os');
 
-const orderschema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema(
+    {
     name: {
         type: String,
         required: true,
@@ -12,6 +11,10 @@ const orderschema = new mongoose.Schema({
         required:true,
     },
     address: {
+        street :{
+            type : String,
+            required:true,
+        },
         city:{
             type : String,
             required:true,
@@ -49,6 +52,6 @@ const orderschema = new mongoose.Schema({
 })
 
 
-const Order = mongoose.model('Order',orderschema);
+const Order = mongoose.model('Order',orderSchema);
 
 module.exports = Order ;

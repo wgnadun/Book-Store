@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import Swal from 'sweetalert2';
+import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state =>state.cart.cartItems);
@@ -15,12 +18,16 @@ const CheckoutPage = () => {
           formState: { errors } ,
         } = useForm()
      
+
+        const [createOrder,{isLoading,error}] = useCreateOrderMutation();
+
         const [isChecked,setIsChecked] = useState(false)
-        const onSubmit = (data)=> {
+        const onSubmit = async (data)=> {
         const newOrder ={
             name:data.name,
             email:currentUser?.email,
             address:{
+                street: data.street,
                 city:data.city,
                 country:data.country,
                 state:data.state,
@@ -31,15 +38,29 @@ const CheckoutPage = () => {
             productIds:cartItems.map(item => item?._id),
             totalPrice:totalPrice,
         }
-        console.log(newOrder);
+        try {
+             await createOrder(newOrder).unwrap();
+                Swal.fire({
+                title: "Your Order has been placed successfully",
+                icon: "success",
+                draggable: true
+                });
+        } catch (error) {
+            console.error("Error in place an order",error);
+            alert("Failed to place an order");
+        }
     }
+
+    if(isLoading) return <div>Loading... </div>
+
+
   return (
     <section>
         <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
     <div className="container max-w-screen-lg mx-auto">
         <div>
             <div>
-            <h2 className="font-semibold text-xl text-gray-600 mb-2">Cash On Delevary</h2>
+            <h2 className="font-semibold text-xl text-gray-600 mb-2">Cash On Delivery</h2>
             <p className="text-gray-500 mb-2">Total Price: ${totalPrice ? totalPrice :0}</p>
             <p className="text-gray-500 mb-6">Items:  {
                                     cartItems.length > 0 ?  <span className="text-sm font-semibold sm:ml-1">{cartItems.length}</span> :<span className="text-sm font-semibold sm:ml-1">0</span>}</p>
@@ -77,10 +98,10 @@ const CheckoutPage = () => {
                                 </div>
 
                                 <div className="md:col-span-3">
-                                    <label htmlFor="address">Address / Street</label>
+                                    <label htmlFor="address">Address : <br /> Street</label>
                                     <input
-                                        {...register("address")}
-                                        type="text" name="address" id="address" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
+                                        {...register("street")}
+                                        type="text" name="street" id="street" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                 </div>
 
                                 <div className="md:col-span-2">
@@ -138,7 +159,7 @@ const CheckoutPage = () => {
                                         <input  
                                         {...register("billing_same")}
                                         type="checkbox" name="billing_same" id="billing_same" className="form-checkbox"   onChange={() => setIsChecked(!isChecked)}/>
-                                        <label htmlFor="billing_same" className="ml-2 ">I am aggree to the <Link className='underline underline-offset-2 text-blue-600'>Terms & Conditions</Link> and <Link className='underline underline-offset-2 text-blue-600'>Shoping Policy.</Link></label>
+                                        <label htmlFor="billing_same" className="ml-2 ">I am agree to the <Link className='underline underline-offset-2 text-blue-600'>Terms & Conditions</Link> and <Link className='underline underline-offset-2 text-blue-600'>Shopping Policy.</Link></label>
                                     </div>
                                 </div>
                                 <div className="md:col-span-5 text-right">

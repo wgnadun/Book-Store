@@ -3,7 +3,7 @@ const {createAOrder} = require('./order.controller');
 
 
 
-const router =express.Router();
+const router = express.Router();
 
 
 ///create order endpoints
