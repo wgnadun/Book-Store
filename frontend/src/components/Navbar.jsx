@@ -1,4 +1,4 @@
-import {  Link } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { LuCircleUserRound } from "react-icons/lu";
@@ -28,12 +28,18 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const cartItems = useSelector (state =>state.cart.cartItems);
 
-
+     const navigate = useNavigate();
     const {currentUser,logout } = useAuth();
 
-    const handleLogOut = ()=>{
-        logout()
+   const handleLogOut = async () => {
+    try {
+        await logout();
+        navigate("/login");
+    } catch (error) {
+        console.error("Logout error:", error);
     }
+};
+
 
   return (
   <>

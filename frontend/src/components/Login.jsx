@@ -21,7 +21,8 @@ const Login = () => {
           try {
             await loginUser(data.email,data.password);
             alert("Login successful!")
-            navigate("/")
+                              navigate("/")
+
           } catch (error) {
               setMessage("Invalid email or password")
               console.log(error)

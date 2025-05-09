@@ -20,7 +20,6 @@ const Register = () => {
         // register user with email and password
 
         const onSubmit =async(data) =>{
-          console.log(data);
 
           try {
             await registerUser(data.email,data.password)

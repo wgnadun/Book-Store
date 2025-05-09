@@ -33,6 +33,10 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
    //sign in with google
 
    const signInWithGoogle = async () =>{
+                    googleProvider.setCustomParameters({
+                prompt: "select_account"
+                });
+
             return await signInWithPopup(auth,googleProvider)
    }
     
