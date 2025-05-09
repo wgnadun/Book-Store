@@ -9,6 +9,7 @@ import avatarImg from "../assets/avatar.png";
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
 
 
 
@@ -27,9 +28,13 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const cartItems = useSelector (state =>state.cart.cartItems);
 
-    console.log(cartItems);
 
-    const currentUser = true;
+    const {currentUser,logout } = useAuth();
+
+    const handleLogOut = ()=>{
+        logout()
+    }
+
   return (
   <>
             <header className='max-w-screen-2x1 mx-auto px-4 py-6'>
@@ -81,6 +86,11 @@ const Navbar = () => {
                                                                 </li>
                                                             ))
                                                         }
+                                                        {/* Logoout button */}
+                                                        <li>
+                                                            <button onClick={handleLogOut}
+                                                            className="w-full text-left block px-4 py-2 hover:bg-gray-100 text-sm">Logout</button>
+                                                        </li>
                                                     </ul>
                                                 </div>
 

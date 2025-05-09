@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config"; //import firebase auth instance
 import { useContext } from "react"; //import useContext hook from react
-
+import { signOut } from "firebase/auth"; //import signOut function from firebase auth
 //create a context for auth
 const AuthContext = createContext();
 //google provider for google sign in
@@ -37,13 +37,11 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
    }
     
    //logout the user
-    const logoutUser = () =>{
-     return signOut (auth)
+    const logout = () =>{
+     return signOut(auth)
     }
 
     // maanage user 
-
-
     useEffect (()=>{
         const unsubscribe = onAuthStateChanged(auth,(user)=>{
             setCurrentUser(user);
@@ -52,10 +50,11 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
             if(user){
                 const {email,displayName,photoURL} = user ; 
                 const userData = {
-                    email,username:displayName,photo:photoURL
+                    email,username: displayName,photo:photoURL
                 }
             }
         })
+
         return () => unsubscribe() ;
     },[])
 
@@ -65,7 +64,7 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
         registerUser,
         loginUser,
         signInWithGoogle,
-        logoutUser
+        logout
         
         }
           
@@ -76,3 +75,4 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
                 </AuthContext.Provider>
             )
 }
+
