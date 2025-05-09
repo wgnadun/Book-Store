@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Swal from 'sweetalert2';
-import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
-
+import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';  // Replace with the actual library
 const CheckoutPage = () => {
     const cartItems = useSelector(state =>state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc,item)=>acc + item.newPrice,0).toFixed(2);
@@ -43,7 +42,8 @@ const CheckoutPage = () => {
                 Swal.fire({
                 title: "Your Order has been placed successfully",
                 icon: "success",
-                draggable: true
+                draggable: true,
+                confirmButtonColor:"#008000",
                 });
         } catch (error) {
             console.error("Error in place an order",error);
