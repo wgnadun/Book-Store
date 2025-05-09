@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
   const [message, setMessage] = useState("");
-  const {registerUser} = useAuth()
+  const {registerUser,signInWithGoogle} = useAuth()
+  const navigate = useNavigate();
+  
 
   const { register,
           handleSubmit, 
@@ -23,13 +25,24 @@ const Register = () => {
           try {
             await registerUser(data.email,data.password)
             alert("User registered successfully")
+            navigate("/");
           } catch (error) {
             setMessage("please provide valid email and password")
           }
         } 
 
-        const handleGoogleSignIn =()=>{
-          
+        // register user with google
+
+
+        const handleGoogleSignIn = async ()=>{
+              try {
+                  await signInWithGoogle();
+                  alert("Login successful!");
+                  navigate("/");
+              } catch (error) {
+                   setMessage("Sign in failed!")
+                   console.log(error)
+              }
         }
       
   return (

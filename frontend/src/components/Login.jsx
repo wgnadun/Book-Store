@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [message, setMessage] = useState("");
-  const {loginUser} = useAuth() //importing loginUser function from AuthContext
+  const {loginUser,signInWithGoogle} = useAuth() //importing loginUser function from AuthContext
   const navigate = useNavigate();
  
   const {
@@ -20,7 +20,7 @@ const Login = () => {
         const onSubmit = async (data) => {
           try {
             await loginUser(data.email,data.password);
-            alert("Login successful")
+            alert("Login successful!")
             navigate("/")
           } catch (error) {
               setMessage("Invalid email or password")
@@ -28,8 +28,15 @@ const Login = () => {
           }
         }
 
-        const handleGoogleSignIn =()=>{
-          
+        const handleGoogleSignIn =async ()=>{
+              try {
+                  await signInWithGoogle();
+                  alert("Login successful!");
+                  navigate("/")
+              } catch (error) {
+                   setMessage("Sign in failed!")
+                   console.log(error)
+              }
         }
 
   return (

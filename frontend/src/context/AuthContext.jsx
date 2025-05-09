@@ -1,10 +1,12 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { createContext, useState } from "react";
 import { auth } from "../firebase/firebase.config"; //import firebase auth instance
 import { useContext } from "react"; //import useContext hook from react
 
 //create a context for auth
 const AuthContext = createContext();
+//google provider for google sign in
+const googleProvider = new GoogleAuthProvider();
 
 export const useAuth = () => {
     return useContext(AuthContext);
@@ -28,11 +30,20 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
          return await signInWithEmailAndPassword(auth,email,password)
    }
    
+   //sign in with google
+
+   const signInWithGoogle = async () =>{
+            return await signInWithPopup(auth,googleProvider)
+   }
+    
+
+
     const value ={
              
         currentUser, //current user object
         registerUser,
-        loginUser
+        loginUser,
+        signInWithGoogle
         
         }
           
