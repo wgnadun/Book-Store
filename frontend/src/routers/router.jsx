@@ -8,6 +8,9 @@ import CheckoutPage from '../pages/books/CheckoutPage';
 import SingleBook from '../pages/books/SingleBook';
 import PrivateRoutes from './PrivateRoutes';
 import OrderPage from '../pages/books/OrderPage';
+import AdminRoutes from './AdminRoutes';
+
+
 const router =createBrowserRouter([
     {
         path: '/',
@@ -42,6 +45,33 @@ const router =createBrowserRouter([
             }
         ]
     },
+    {
+        path:'/dashboard',
+        element: <AdminRoutes><div>Admin Dashboard</div></AdminRoutes>,
+        children:[
+            {
+                
+            path :"",
+            element: <AdminRoutes><div>DashBoardhome</div></AdminRoutes>
+            
+            },{
+
+            path:"add-new-book",
+            element: <AdminRoutes><div>Add new Book</div></AdminRoutes>
+            
+            },{
+                
+            path:"edit-book/:id",
+            element: <AdminRoutes><div>Edit Book</div></AdminRoutes>
+            
+            },{
+                
+            path:"manage-book/:id",
+            element: <div>Manage Book</div>
+            
+            }
+        ]
+    }
 ]);
 
 export default router;
