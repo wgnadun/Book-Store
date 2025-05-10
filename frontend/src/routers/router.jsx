@@ -9,6 +9,7 @@ import SingleBook from '../pages/books/SingleBook';
 import PrivateRoutes from './PrivateRoutes';
 import OrderPage from '../pages/books/OrderPage';
 import AdminRoutes from './AdminRoutes';
+import AdminLogin from '../components/AdminLogin';
 
 
 const router =createBrowserRouter([
@@ -44,7 +45,11 @@ const router =createBrowserRouter([
                 element : <SingleBook/>// Cart component, you can replace it with your own component
             }
         ]
-    },
+    },{
+        path : '/admin',
+        element : <AdminLogin/>
+    }
+    ,
     {
         path:'/dashboard',
         element: <AdminRoutes><div>Admin Dashboard</div></AdminRoutes>,
