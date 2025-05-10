@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Swal from 'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';  // Replace with the actual library
@@ -19,7 +19,7 @@ const CheckoutPage = () => {
      
 
         const [createOrder,{isLoading,error}] = useCreateOrderMutation();
-
+        const navigate = useNavigate();
         const [isChecked,setIsChecked] = useState(false)
         const onSubmit = async (data)=> {
         const newOrder ={
@@ -45,6 +45,8 @@ const CheckoutPage = () => {
                 draggable: true,
                 confirmButtonColor:"#008000",
                 });
+
+                navigate("/orders");
         } catch (error) {
             console.error("Error in place an order",error);
             alert("Failed to place an order");
