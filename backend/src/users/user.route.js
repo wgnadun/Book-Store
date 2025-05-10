@@ -12,7 +12,7 @@ router.post('/admin',async (req,res)=>{
     try {
         const admin = await User.findOne({username})
         if(!admin){
-            res.status(404).send({message:"Admin not found!"})
+            return res.status(404).send({message:"Admin not found!"})
         }
         if(admin.password !== password){
             return res.status(401).send({message:'Invalid password'})
