@@ -7,6 +7,7 @@ import CartPage from '../pages/books/CartPage';
 import CheckoutPage from '../pages/books/CheckoutPage';
 import SingleBook from '../pages/books/SingleBook';
 import PrivateRoutes from './PrivateRoutes';
+import OrderPage from '../pages/books/OrderPage';
 const router =createBrowserRouter([
     {
         path: '/',
@@ -18,7 +19,7 @@ const router =createBrowserRouter([
             },
             {
                 path: '/orders',
-                element:<div>Orders</div>
+                element:<PrivateRoutes><OrderPage/></PrivateRoutes> // Order component, you can replace it with your own component
             },
             {
                 path:'/about',
