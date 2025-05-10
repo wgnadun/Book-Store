@@ -13,9 +13,9 @@ router.get("/",getAllBooks)
 router.get("/:id",getSingleBook)
 
 // update a single  book
-router.put("/edit/:id",updateBook)
+router.put("/edit/:id",verifyAdminToken,updateBook)
 
 // delete a single  book
-router.delete("/:id",deleteBook)
+router.delete("/:id",verifyAdminToken,deleteBook)
 
 module.exports = router;
