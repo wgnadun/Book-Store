@@ -65,6 +65,7 @@ export const AuthProvider = ({children})=>{   //here children is the props that 
     const value ={
              
         currentUser, //current user object
+        loading,
         registerUser,
         loginUser,
         signInWithGoogle,
