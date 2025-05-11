@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import getBaseUrl from '../utils/baseURL';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import getBaseUrl from '../Utils/baseURL';
 
 const AdminLogin = () => {
       const [message, setMessage] = useState("");
