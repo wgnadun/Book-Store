@@ -6,7 +6,7 @@ const ManageBooks = () => {
     const navigate = useNavigate();
 
     const {data, refetch} = useFetchAllBooksQuery();
-    const books = Array.isArray(data?.books) ? data.books : [];
+    const books = Array.isArray(data?.books) ? data.books : [];  /////important
 
     const [deleteBook] = useDeleteBookMutation()
 
@@ -92,7 +92,7 @@ const ManageBooks = () => {
                                                 Edit
                                             </Link>
                                             <button 
-                                            onClick={() => handleDeleteBook(book._id)}
+                                            onClick={() => handleDeleteBook(book?._id)}
                                             className="font-medium bg-red-500 py-1 px-4 rounded-full text-white mr-2">Delete</button>
                                         </td>
                                     </tr> 
