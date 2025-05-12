@@ -12,6 +12,7 @@ import AdminRoutes from './AdminRoutes';
 import AdminLogin from '../components/AdminLogin';
 import Dashboardlayout from '../pages/dashboard/Dashboardlayout';
 import Dashboard from '../pages/dashboard/Dashboard';
+import ManageBooks from '../pages/dashboard/manageBooks/ManageBooks';
 
 
 const router =createBrowserRouter([
@@ -73,8 +74,8 @@ const router =createBrowserRouter([
             
             },{
                 
-            path:"manage-book/:id",
-            element: <AdminRoutes><div>Manage Book</div></AdminRoutes>
+            path:"manage-book",
+            element: <AdminRoutes><ManageBooks/></AdminRoutes>
             
             }
         ]
