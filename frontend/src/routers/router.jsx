@@ -73,7 +73,7 @@ const router =createBrowserRouter([
             },{
                 
             path:"manage-book/:id",
-            element: <div>Manage Book</div>
+            element: <AdminRoutes><div>Manage Book</div></AdminRoutes>
             
             }
         ]
