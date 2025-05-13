@@ -14,8 +14,7 @@ import { useAuth } from "../context/AuthContext";
 
 
 // initialize dropdown content
-const navigation = [
-    {name : "Dashboard", href : "/dashboard" },               
+const navigation = [               
     {name : "Orders", href : "/orders" },
     {name : "Cart Page", href : "/cart" },
     {name : "Check Out", href : "/checkout" },
