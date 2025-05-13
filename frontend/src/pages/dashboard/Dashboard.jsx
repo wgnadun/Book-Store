@@ -11,8 +11,8 @@ const Dashboard = () => {
   const [loading,setLoading] = useState(true);
   const [data,setData] = useState({});
   const navigate = useNavigate()
-    console.log(data)
-  useEffect(()=>{
+
+    useEffect(()=>{
     const fetchData = async ()=>{
       try {
           const response = await axios.get(`${getBaseUrl()}/api/admin`,{

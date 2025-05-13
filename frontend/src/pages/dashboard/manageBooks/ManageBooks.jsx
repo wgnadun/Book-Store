@@ -42,7 +42,6 @@ const ManageBooks = () => {
                                 <h3 className="font-semibold text-base text-blueGray-700">All Books</h3>
                             </div>
                             <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                                <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">See all</button>
                             </div>
                         </div>
                     </div>
@@ -88,12 +87,20 @@ const ManageBooks = () => {
                                         </td>
                                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 space-x-4">
 
-                                            <Link to={`/dashboard/edit-book/${book?._id}`} className="font-medium text-indigo-600 hover:text-indigo-700 mr-2 hover:underline underline-offset-2">
+                                        <button className="font-medium bg-white border border-indigo-500 text-indigo-500 py-1 px-4 rounded-full mr-2 transition duration-300 ease-in-out hover:bg-indigo-500 hover:text-white">
+                                            <Link to={`/dashboard/edit-book/${book?._id}`} className="block w-full h-full text-inherit">
                                                 Edit
                                             </Link>
-                                            <button 
+                                            </button>
+
+
+                                         <button 
                                             onClick={() => handleDeleteBook(book?._id)}
-                                            className="font-medium bg-red-500 py-1 px-4 rounded-full text-white mr-2">Delete</button>
+                                            className="font-medium bg-white border border-red-500 text-red-500 py-1 px-4 rounded-full mr-2 transition duration-300 ease-in-out hover:bg-red-500 hover:text-white">
+                                            Delete
+                                            </button>
+
+
                                         </td>
                                     </tr> 
                                     ))
