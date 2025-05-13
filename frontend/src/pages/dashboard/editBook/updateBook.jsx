@@ -5,6 +5,9 @@ import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { useFetchBookByIdQuery, useUpdateBookMutation } from '../../../redux/features/books/booksApi'
 import Loading from '../../../components/Loading'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import getBaseUrl from '../../../utils/baseURL'
 
 
 const UpdateBook = () => {
@@ -30,7 +33,36 @@ const UpdateBook = () => {
     },[bookData,setValue])
 
     const onSubmit = async(data) =>{
+          const updateBookData ={
+            title: data.title,
+            description: data.description,
+            category :data.category,
+            trending :data.trending,
+            oldPrice :Number(data.oldPrice),
+            newPrice :Number(data.newPrice),
+            coverImage: data.coverImage || bookData.coverImage,
+          };
+          try {
+            await axios.put(`${getBaseUrl()}/api/books/edit/${id}`,updateBookData, 
+          
+            {
+                headers:{
+                  'Authorization':`Bearer ${localStorage.getItem('token')}`,
+                  'Content-Type' :'application/json',
+            }
 
+          })
+            Swal.fire({
+                          title: "The book has been successfully Updated",
+                          icon: "success",
+                          draggable: true,
+                          confirmButtonColor:"#008000",
+                          });
+           await refetch();
+          } catch (error) {
+            console.log("Failed to Update book");
+            alert("Failed to Update book");
+          }
     }
 
     if(isLoading) return <Loading/>
