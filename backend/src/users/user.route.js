@@ -21,7 +21,7 @@ router.post('/admin',async (req,res)=>{
         const token = jwt.sign(
             {id:admin._id,username:admin.username,role:admin.role}, // payload (data to be encoded)
             JWT_SECRET,         // secret key
-            {expiresIn:'1h'} // token expires in 1 hour
+            {expiresIn:'48h'} // token expires in 1 hour
         )
 
         return res.status(200).json({
@@ -39,3 +39,13 @@ router.post('/admin',async (req,res)=>{
 })
 
 module.exports = router;
+
+// Receives login data (username, password)
+
+// Finds the user in the database
+
+// Verifies password
+
+// If valid, creates a JWT token
+
+// Sends the token and user info in the response

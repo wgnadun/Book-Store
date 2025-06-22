@@ -10,7 +10,7 @@ const verifyAdminToken = (req, res, next) => {
     }
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if(err){
-            return res.status(403).json({ message: 'Invalid credentails' });
+            return res.status(403).json({ message: 'Invalid credentials' });
 
         }  
         req.user =user;
