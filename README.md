@@ -81,10 +81,6 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 5. Push to the branch (`git push origin feature/your-feature`)
 6. Open a pull request
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Acknowledgments
 
 - Inspired by book management systems and library apps
