@@ -1,175 +1,289 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom'
-import {HiViewGridAdd} from "react-icons/hi"
-import {MdOutlineManageHistory} from "react-icons/md"
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { HiViewGridAdd } from "react-icons/hi";
+import { MdOutlineManageHistory } from "react-icons/md";
+import { useState, useEffect } from 'react';
+import image from "../../assets/fav.png"
 
-const Dashboardlayout = () => {
-
-
+const AdminPortalLayout = () => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState(window.location.pathname);
+  
   const navigate = useNavigate();
-    const logout = async()=>{
-      localStorage.removeItem('token')
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setSidebarOpen(false);
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setActiveLink(window.location.pathname);
+  }, [window.location.pathname]);
+
+  const logout = async() => {
+    localStorage.removeItem('token');
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/admin");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
+  const toggleProfileMenu = () => {
+    setProfileMenuOpen(!isProfileMenuOpen);
+  };
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isProfileMenuOpen && !event.target.closest('.profile-menu-container')) {
+        setProfileMenuOpen(false);
+      }
     };
 
-   const handleLogout = async () => {
-        try {
-            await logout();
-            navigate("/admin");
-        } catch (error) {
-            console.error("Logout error:", error);
-        }
-};
-
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isProfileMenuOpen]);
 
   return (
-   <section className="flex md:bg-gray-100 min-h-screen overflow-hidden">
-    <aside className="hidden sm:flex sm:flex-col">
-      <a href="#" className="inline-flex items-center justify-center h-20 w-20 bg-purple-600 hover:bg-red-500 focus:bg-purple-500">
-        <img src="../../assets/fav.png" alt="" />
-      </a>
-      <div className="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
-        <nav className="flex flex-col mx-4 my-6 space-y-4">
-          <a href="#" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Folders</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-            </svg>
-          </a>
-          <Link to="/dashboard" className="inline-flex items-center justify-center py-3 text-purple-600 bg-white rounded-lg">
-            <span className="sr-only">Dashboard</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-          </Link>
-          <Link to="" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Add Book</span>
-            <HiViewGridAdd className="h-6 w-6"/>
-          </Link>
-          <Link to="/dashboard/manage-book" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Documents</span>
-            <MdOutlineManageHistory className="h-6 w-6"/>
-          </Link>
-        </nav>
-        <div className="inline-flex items-center justify-center h-20 w-20 border-t border-gray-700">
-          <button className="p-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Settings</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </aside>
-    <div className="flex-grow text-gray-800">
-      <header className="flex items-center h-20 px-6 sm:px-10 bg-white">
-        <button className="block sm:hidden relative flex-shrink-0 p-2 mr-2 text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:bg-gray-100 focus:text-gray-800 rounded-full">
-          <span className="sr-only">Menu</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
-          </svg>
-        </button>
-        {/* <div className="relative w-full max-w-md sm:-ml-2">
-          <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" className="absolute h-6 w-6 mt-2.5 ml-2 text-gray-400">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-          </svg>
-          <input type="text" role="search" placeholder="Search..." className="py-2 pl-10 pr-4 w-full border-4 border-transparent placeholder-gray-400 focus:bg-gray-50 rounded-lg" />
-        </div> */}
-        <div className="flex flex-shrink-0 items-center ml-auto">
-          <button className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
-            <span className="sr-only">User Menu</span>
-            <div className="hidden md:flex md:flex-col md:items-end md:leading-tight">
-              <span className="font-semibold">Grace Simmons</span>
-              <span className="text-sm text-gray-600">Lecturer</span>
-            </div>
-            <span className="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
-              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="user profile photo" className="h-full w-full object-cover"/>
-            </span>
-            <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" className="hidden sm:block h-6 w-6 text-gray-300">
-              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg> 
-          </button>
-          <div className="border-l pl-3 ml-3 space-x-1">
-            <button className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
-              <span className="sr-only">Notifications</span>
-              <span className="absolute top-0 right-0 h-2 w-2 mt-1 mr-2 bg-red-500 rounded-full"></span>
-              <span className="absolute top-0 right-0 h-2 w-2 mt-1 mr-2 bg-red-500 rounded-full animate-ping"></span>
-              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </button>
-            <button
-            onClick={handleLogout}
-            className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
-              <span className="sr-only">Log out</span>
-              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-  </svg>
-            </button>
-          </div>
-        </div>
-      </header>
-      <main className="p-6 sm:p-10 space-y-6 ">
-        <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
-          <div className="mr-6">
-            <h1 className="text-4xl font-semibold mb-2">Dashboard</h1>
-            <h2 className="text-gray-600 ml-0.5">Book Store Inventory</h2>
-          </div>
-          <div className="flex flex-col md:flex-row items-start justify-end -mb-3">
-           <Link
-  to="/dashboard/manage-book"
-  className="relative inline-flex items-center px-5 py-3 mb-3 border border-purple-600 text-purple-600 font-medium rounded-md overflow-hidden group"
->
-  <span className="absolute inset-0 w-full h-full bg-purple-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
-  <span className="relative flex items-center group-hover:text-white transition-colors duration-300 ease-out">
-    <svg
-      aria-hidden="true"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-      />
-    </svg>
-    Manage Books
-  </span>
-</Link>
-
-      <Link
-        to="/dashboard/add-new-book"
-        className="relative inline-flex items-center px-5 py-3 mb-3 ml-6 border border-green-600 text-green-600 font-medium rounded-md overflow-hidden group"
+    <section className="flex bg-black min-h-screen overflow-hidden font-sans">
+      {/* Overlay for mobile sidebar */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-80 z-20 md:hidden backdrop-blur-sm transition-all duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <aside 
+        className={`fixed md:static inset-y-0 left-0 z-30 w-72 transform transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        } flex flex-col bg-gradient-to-br  border-gray-800 bg-gray-900 text-white shadow-2xl`}
       >
-        <span className="absolute inset-0 w-full h-full bg-green-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
-        <span className="relative flex items-center group-hover:text-white transition-colors duration-300 ease-out">
-          <svg
-            aria-hidden="true"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="flex-shrink-0 h-6 w-6 -ml-1 mr-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-          Add New Book
-        </span>
-      </Link>
+        {/* Brand Logo */}
+        <div className="flex items-center justify-center h-20 bg-gradient-to-r from-black to-gray-900 border-b border-red-900/20">
+          <Link to="/dashboard/manage-book" className="flex items-center space-x-3 group">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-800 to-red-950 flex items-center justify-center shadow-lg transform transition-all duration-400 group-hover:scale-105">
+              <img src={image} alt="Logo" className="w-8 h-8" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">Admin Portal</span>
+              <span className="text-xs text-gray-300">BookStore Management</span>
+            </div>
+          </Link>
+        </div>
 
+        {/* Navigation */}
+        <nav className="flex-grow py-8 px-4 space-y-2">
+         
+
+          <Link 
+            to="/dashboard/add-new-book" 
+            className={`flex items-center px-4 py-3 rounded-xl transition-all duration-400 ease-in-out group ${
+              activeLink === '/dashboard/add-new-book' 
+                ? 'bg-gradient-to-r from-gray-800 text-yellow-300 shadow-md transform scale-102 border border-red-900/30' 
+                : 'text-white hover:bg-gray-800/40 hover:border-l-2 hover:border-yellow-500/70'
+            }`}
+            onClick={() => setActiveLink('/dashboard/add-new-book')}
+          >
+            <HiViewGridAdd className={`h-5 w-5 mr-3 transition-all duration-300 ${
+              activeLink === '/dashboard/add-new-book' ? 'text-yellow-300' : 'text-gray-300 group-hover:text-yellow-300 group-hover:scale-110'
+            }`} />
+            <span className="font-medium">Add Book</span>
+          </Link>
+
+          <Link 
+            to="/dashboard/manage-book" 
+            className={`flex items-center px-4 py-3 rounded-xl transition-all duration-400 ease-in-out group ${
+              activeLink === '/dashboard/manage-book' 
+                ? 'bg-gradient-to-r from-gray-800 text-yellow-300 shadow-md transform scale-102 border border-red-900/30' 
+                : 'text-white hover:bg-gray-800/40 hover:border-l-2 hover:border-yellow-500/70'
+            }`}
+            onClick={() => setActiveLink('/dashboard/manage-book')}
+          >
+            <MdOutlineManageHistory className={`h-5 w-5 mr-3 transition-all duration-300 ${
+              activeLink === '/dashboard/manage-book' ? 'text-yellow-300' : 'text-gray-300 group-hover:text-yellow-300 group-hover:scale-110'
+            }`} />
+            <span className="font-medium">Manage Books</span>
+          </Link>
+
+          <div className="pt-8 px-4">
+            <div className="border-t border-red-900/50 pt-6">
+              <button 
+                className="flex items-center px-4 py-3 w-full rounded-xl transition-all duration-400 ease-in-out text-white hover:bg-gray-800/30 hover:border hover:border-red-800/30 group"
+                onClick={handleLogout}
+              >
+                <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" 
+                  className="h-5 w-5 mr-3 text-red-400 group-hover:scale-110 group-hover:text-red-300 transition-all duration-300">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" 
+                  />
+                </svg>
+                <span className="font-medium">Logout</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        {/* Admin Help */}
+        <div className="p-4 mb-6">
+          <div className="bg-gradient-to-r from-black to-gray-900/90 rounded-xl p-4 border border-red-900/10 backdrop-blur-sm">
+            <h4 className="text-sm font-semibold text-yellow-300 mb-2">Need Help?</h4>
+            <p className="text-xs text-gray-300 mb-3">Contact our support team for assistance with the admin portal.</p>
+            <button className="text-xs bg-gray-800 hover:bg-gray-700 text-white py-2 px-3 rounded-lg transition-all duration-400 w-full transform hover:scale-102 hover:shadow hover:shadow-red-900/30">
+              Contact Support
+            </button>
           </div>
         </div>
-        <Outlet/>
-      </main>
-    </div>
-  </section>
-  )
-}
+      </aside>
 
-export default Dashboardlayout
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <header className="flex items-center h-16 px-6 bg-gradient-to-r from-black to-gray-900 shadow-md z-10 border-b border-red-900/20">
+          <button 
+            className="md:hidden relative p-2 mr-3 text-gray-300 rounded-full hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-red-700 transition-all duration-300"
+            onClick={() => setSidebarOpen(!isSidebarOpen)}
+          >
+            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+          </button>
+             
+          
+          <div className="flex-1"></div>
+          
+          <div className="flex items-center space-x-4">
+
+            <div className="relative profile-menu-container ">
+              <button 
+                className="flex items-center space-x-3 focus:outline-none group"
+                onClick={toggleProfileMenu}
+              >
+              
+
+              </button>
+              
+              {isProfileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-60 bg-gray-900 rounded-lg shadow-xl py-2 z-50 border border-gray-700/50 transition-all duration-200">
+                  <div className="px-4 py-3 border-b border-gray-700/30">
+                    <p className="text-sm font-semibold text-yellow-300">Admin User</p>
+                    <p className="text-xs text-gray-400">Admin.User@example.com</p>
+                  </div>
+                  <a href="#" className="block px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800/40 hover:text-yellow-300 transition-all duration-300">
+                    <div className="flex items-center">
+                      <svg className="h-4 w-4 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      Your Profile
+                    </div>
+                  </a>
+                  <a href="#" className="block px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800/40 hover:text-yellow-300 transition-all duration-300">
+                    <div className="flex items-center">
+                      <svg className="h-4 w-4 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      Settings
+                    </div>
+                  </a>
+                  <div className="border-t border-gray-700/30 my-1"></div>
+                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2.5 text-sm text-gray-400 hover:bg-gray-800/40 hover:text-red-300 transition-all duration-300">
+                    <div className="flex items-center">
+                      <svg className="h-4 w-4 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      Logout
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-gray-900 to-black">
+          <div className="max-w-7xl mx-auto">
+            {/* Header Section */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between pb-6 border-b border-red-900/20 mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-yellow-300">Admin Portal</h1>
+                <p className="mt-1 text-sm text-gray-400">Book Store Inventory Management</p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3 mt-4 md:mt-0">
+                <Link
+                  to="/dashboard/manage-book"
+                  className="inline-flex items-center justify-center px-4 py-2.5 bg-gray-800 text-white border border-gray-700 rounded-lg shadow hover:bg-gray-700 hover:text-yellow-300 hover:border-yellow-500/30 transition-all duration-400 transform hover:-translate-y-0.5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="flex-shrink-0 h-5 w-5 mr-2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                    />
+                  </svg>
+                  Manage Books
+                </Link>
+
+                <Link
+                  to="/dashboard/add-new-book"
+                  className="inline-flex items-center justify-center px-4 py-2.5 bg-gray-900 text-yellow-300 border border-gray-700 rounded-lg shadow hover:bg-gray-800 hover:text-white hover:border-yellow-500/30 transition-all duration-400 transform hover:-translate-y-0.5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="flex-shrink-0 h-5 w-5 mr-2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                  Add New Book
+                </Link>
+              </div>
+            </div>
+            
+            {/* Content Area */}
+            <div className="bg-gradient-to-br from-gray-900  rounded-xl shadow p-6 border border-gray-800/30 transition-all duration-400 hover:shadow hover:shadow-gray-900/20">
+              <Outlet />
+            </div>
+
+            {/* Footer */}
+            <div className="mt-8 text-center">
+              <p className="text-xs text-gray-500">
+                © 2025 BookStore Admin Portal. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
+  );
+};
+
+export default AdminPortalLayout;
